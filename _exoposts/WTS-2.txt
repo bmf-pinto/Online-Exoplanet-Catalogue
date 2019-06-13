@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WTS-2
+teff:5000.0
+feh:0.2
+mass:0.81
+Exoplanets: [WTS-2 b]
+Exoplanets-Mass: [1.12]
+Exoplanets-Period: [1.0187074]
+Number-Exoplanets:1
+---

@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:XO-3
+teff:6781.0
+feh:-0.08
+mass:1.39
+Exoplanets: [XO-3 b]
+Exoplanets-Mass: [11.79]
+Exoplanets-Period: [3.1915239]
+Number-Exoplanets:1
+---

@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WASP-4
+teff:5513.0
+feh:0.03
+mass:0.89
+Exoplanets: [WASP-4 b]
+Exoplanets-Mass: [1.237]
+Exoplanets-Period: [1.33823187]
+Number-Exoplanets:1
+---

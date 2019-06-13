@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WASP-6
+teff:5383.0
+feh:-0.14
+mass:0.83
+Exoplanets: [WASP-6 b]
+Exoplanets-Mass: [0.503]
+Exoplanets-Period: [3.361006]
+Number-Exoplanets:1
+---

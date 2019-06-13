@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WASP-42
+teff:5315.0
+feh:0.29
+mass:0.91
+Exoplanets: [WASP-42 b]
+Exoplanets-Mass: [0.5]
+Exoplanets-Period: [4.9816872]
+Number-Exoplanets:1
+---

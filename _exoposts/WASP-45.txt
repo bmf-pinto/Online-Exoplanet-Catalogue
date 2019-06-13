@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WASP-45
+teff:5298.0
+feh:0.43
+mass:0.95
+Exoplanets: [WASP-45 b]
+Exoplanets-Mass: [1.007]
+Exoplanets-Period: [3.1260876]
+Number-Exoplanets:1
+---

@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WASP-46
+teff:5725.0
+feh:-0.18
+mass:0.91
+Exoplanets: [WASP-46 b]
+Exoplanets-Mass: [2.101]
+Exoplanets-Period: [1.43037]
+Number-Exoplanets:1
+---

@@ -1,0 +1,53 @@
+<div id="entry-list">
+
+<div class="row" style="margin-bottom:10px;">
+		<input type="text" class="search form-control" placeholder="Search" />
+</div>
+
+<div class="row">
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th style="width:20%;"><span class="sort" data-sort="name">Name</span></th>
+			<th style="width:20%;"><span class="sort" data-sort="city">Teff</span></th>
+			<th style="width:20%;"><span class="sort" data-sort="category">Metallicity</span></th>
+			<th style="width:20%;"><span class="sort" data-sort="tags">Mass</span></th>
+			<th style="width:20%;"><span class="sort" data-sort="tags">Exoplanets</span></th>
+		</tr>
+	</thead>
+	<tbody class="list">
+	{% for post in site.posts %}
+		<tr>
+			<td class="name" rowspan={{post.planets}}>{{ post.company-name }}</td>
+			<td class="city" rowspan={{post.planets}}>{{ post.city }}</td>
+			<td class="category" rowspan={{post.planets}}>{{ post.tags.length }}</td>
+			<td class="tags">{{ post.tags[0]}}<td/>	
+			<td class="tags">{{ post.tags[0]}}<td/>	
+		</tr>
+		<tr>
+		<td class="tags">{{ post.tags[1]}}<td/>	
+		<td class="tags">{{ post.tags[1]}}<td/>	
+		</tr>
+		<tr>
+		<td class="tags">{{ post.tags[2]}}<td/>
+		<td class="tags">{{ post.tags[1]}}<td/>	
+		</tr>
+		
+		
+	{% endfor %}
+	</tbody>
+</table>
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+var options = {
+  valueNames: ['name', 'city', 'category', 'tags']
+};
+
+var entryList = new List('entry-list', options);
+
+</script>

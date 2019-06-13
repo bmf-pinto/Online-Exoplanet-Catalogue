@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WASP-48
+teff:6334.0
+feh:-0.02
+mass:1.12
+Exoplanets: [WASP-48 b]
+Exoplanets-Mass: [0.98]
+Exoplanets-Period: [2.143634]
+Number-Exoplanets:1
+---

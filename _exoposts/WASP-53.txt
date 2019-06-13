@@ -1,0 +1,11 @@
+---
+layout:entry
+Star-name:WASP-53
+teff:4953.0
+feh:0.22
+mass:0.82
+Exoplanets: [WASP-53 b,WASP-53 c]
+Exoplanets-Mass: [2.132,16.35]
+Exoplanets-Period: [3.3098443,2840.0]
+Number-Exoplanets:2
+---
