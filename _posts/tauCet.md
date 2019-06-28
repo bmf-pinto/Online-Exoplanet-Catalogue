@@ -1,6 +1,6 @@
 ---
 layout: entry
-Star-name: tau Cet
+Star-name: tau-Cet
 teff: 5310.0
 feh: -0.52
 mass: 0.76
