@@ -31,7 +31,7 @@
 			<td class="period">{{ post.Exoplanets-Period[0]}}<td/>
 			
 		</tr>
-		{%for i=1 ; i < post.Number-Exoplanets ; i++ %}
+		{%for i in 1..post.Number-Exoplanets %}
 				<tr>
 				<td class="planets">{{ post.Exoplanets[i]}}<td/>	
 				<td class="pmass">{{ post.Exoplanets-Mass[i]}}<td/>	
