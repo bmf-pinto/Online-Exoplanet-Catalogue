@@ -26,12 +26,23 @@
 			<td class="Teff" rowspan={{post.Number-Exoplanets}}>{{ post.teff }}</td>
 			<td class="Metal" rowspan={{post.Number-Exoplanets}}>{{ post.feh }}</td>
 			<td class="RVData" rowspan={{post.Number-Exoplanets}}>...</td>
-			<td class="planets">{{ post.Exoplanets}}<td/>	
-			<td class="pmass">{{ post.Exoplanets-Mass}}<td/>
-			<td class="period">{{ post.Exoplanets-Period}}<td/>
+			<td class="planets">{{ post.Exoplanets[0]}}<td/>	
+			<td class="pmass">{{ post.Exoplanets-Mass[0]}}<td/>
+			<td class="period">{{ post.Exoplanets-Period[0]}}<td/>
 			
 		</tr>
+		< script type='text/javascript'>
+			for (i=1 ; i < post.Number-Exoplanets ; i++) {
+				<tr>
+				<td class="planets">{{ post.Exoplanets[i]}}<td/>	
+				<td class="pmass">{{ post.Exoplanets-Mass[i]}}<td/>	
+				<td class="period">{{ post.Exoplanets-Period[i]}}<td/>	
+				</tr>
+			}
+		</script>
 		
+				
+			
 		
 		
 	{% endfor %}
