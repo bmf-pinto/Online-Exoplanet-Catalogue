@@ -2,10 +2,13 @@
 layout: none
 ---
 [{% for post in site.posts %}{
-	"company-name": "{{post.company-name}}",
-	"city": "{{post.city}}",
-	"state": "{{post.state}}",
-	"employees": "{{post.employees}}",
-	"tags": "{{ post.tags | array_to_sentence_string }}",
-	"categories": "{{post.categories}}"
+	"Star-name": "{{post.Star-name}}",
+	"teff": "{{post.teff}}",
+	"feh": "{{post.feh}}",
+	"mass": "{{post.mass}}",
+ 	"Exoplanets": "{{post.Exoplanets}}",
+ 	"Exoplanets-Mass": "{{post.Exoplanets-Mass}}",
+ 	"Exoplanets-Period": "{{post.Exoplanets-Period}}",
+ 	"Number-Exoplanets": "{{post.Number-Exoplanets}}",
+
 }{% if forloop.rindex0 > 0 %},{% endif %}{% endfor %}]

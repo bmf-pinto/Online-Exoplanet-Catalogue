@@ -8,34 +8,39 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th style="width:12.5%;"><span class="sort" data-sort="name">Star</span></th>
-			<th style="width:12.5%;"><span class="sort" data-sort="Mass">Mass</span></th>
-			<th style="width:12.5%;"><span class="sort" data-sort="Teff">Teff</span></th>
-			<th style="width:12.5%;"><span class="sort" data-sort="Metal">Metallicity</span></th>
-			<th style="width:12.5%;"><span class="sort" data-sort="RVData">rvData</span></th>
-			<th style="width:12.5%;"><span class="sort" data-sort="planets">Exoplanets</span></th>
-			<th style="width:12.5%;"><span class="sort" data-sort="pmass">Mass</span></th>
-			<th style="width:12.5%;"><span class="sort" data-sort="period">Period</span></th>
+			<th style="width:14%;">Star</th>
+			<th style="width:14%;">Mass</th>
+			<th style="width:14%;">Teff</th>
+			<th style="width:14%;">Metallicity</th>
+			<th style="width:14%;">rvData</th>
+			<th style="width:10%;">Exoplanets</th>
+			<th style="width:4%;"></th>
+			<th style="width:18%;">Mass</th>
+			<th style="width:4%;"></th>
+			<th style="width:15%;">Period</th>
 		</tr>
 	</thead>
 	<tbody class="list">
 	{% for post in site.posts %}
+		
 		<tr>
-			<td class="name" rowspan={{post.Number-Exoplanets}}>{{ post.Star-name}}</td>
-			<td class="Mass" rowspan={{post.Number-Exoplanets}}>{{ post.mass }}</td>
-			<td class="Teff" rowspan={{post.Number-Exoplanets}}>{{ post.teff }}</td>
-			<td class="Metal" rowspan={{post.Number-Exoplanets}}>{{ post.feh }}</td>
-			<td class="RVData" rowspan={{post.Number-Exoplanets}}>...</td>
-			<td class="planets">{{ post.Exoplanets[0]}}<td/>	
-			<td class="pmass">{{ post.Exoplanets-Mass[0]}}<td/>
-			<td class="period">{{ post.Exoplanets-Period[0]}}<td/>
-			
+			<td  style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.Star-name}}</td>
+			<td  style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.mass }}</td>
+			<td   style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.teff }}</td>
+			<td style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.feh }}</td>
+			<td style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}><a target="_blank" rel="noopener noreferrer" href="https://github.com/{{ site.data.github }}"> data	</a></td>
+			<td style="width:12.5%;">{{ post.Exoplanets[0]}}<td/>	
+			<td style="width:8%;">{{ post.Exoplanets-Mass[0]}}<td/>
+			<td style="width:12.5%;">{{ post.Exoplanets-Period[0]}}<td/>
+			<td style="width:15%;"></td>
 		</tr>
-		{%for i in 1..post.Number-Exoplanets %}
+		{% assign num = post.Exoplanets-Mass|size|minus:1 %}
+		{% for i in (1..num) %}
 				<tr>
-					<td class="planets">{{ post.Exoplanets[i]}}<td/>	
-					<td class="pmass">{{ post.Exoplanets-Mass[i]}}<td/>	
-					<td class="period">{{ post.Exoplanets-Period[i]}}<td/>	
+					<td style="width:12.5%;" >{{ post.Exoplanets[i]}}<td/>	
+					<td style="width:8%;" >{{ post.Exoplanets-Mass[i]}}<td/>	
+					<td  style="width:12.5%;">{{ post.Exoplanets-Period[i]}}<td/>	
+					<td style="width:15%;"></td>
 				</tr>
 			
 		{% endfor %}
