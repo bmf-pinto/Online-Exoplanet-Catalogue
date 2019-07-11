@@ -5,41 +5,41 @@
 </div>
 
 <div class="row">
-<table class="table table-striped">
-	<thead>
+<table class="table table-striped"  class="sortable">
+	<thead  class="sortable">
 		<tr>
-			<th style="width:14%;">Star</th>
-			<th style="width:14%;">Mass</th>
-			<th style="width:14%;">Teff</th>
-			<th style="width:14%;">Metallicity</th>
-			<th style="width:14%;">rvData</th>
-			<th style="width:10%;">Exoplanets</th>
-			<th style="width:4%;"></th>
-			<th style="width:18%;">Mass</th>
-			<th style="width:4%;"></th>
-			<th style="width:15%;">Period</th>
+			<th style="width:14%;" class='name' >Star</th>
+			<th style="width:14%;" class='mass' >Mass</th>
+			<th style="width:14%;" class='teff' >Teff</th>
+			<th style="width:14%;" class='feh'  >Metallicity</th>
+			<th style="width:14%;" class='data'  >rvData</th>
+			<th style="width:10%;" class='planets'>Exoplanets</th>
+			<th style="width:4%;" ></th>
+			<th style="width:18%;" class='pmass' >Mass</th>
+			<th style="width:4%;" ></th>
+			<th style="width:15%;" class='pperiod'>Period</th>
 		</tr>
 	</thead>
 	<tbody class="list">
 	{% for post in site.posts %}
 		
 		<tr>
-			<td  style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.Star-name}}</td>
-			<td  style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.mass }}</td>
-			<td   style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.teff }}</td>
-			<td style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}>{{ post.feh }}</td>
-			<td style="width:12.5%;" rowspan={{post.Exoplanets-Mass|size}}><a target="_blank" rel="noopener noreferrer" href="https://github.com/{{ site.data.github }}"> data	</a></td>
-			<td style="width:12.5%;">{{ post.Exoplanets[0]}}<td/>	
-			<td style="width:8%;">{{ post.Exoplanets-Mass[0]}}<td/>
-			<td style="width:12.5%;">{{ post.Exoplanets-Period[0]}}<td/>
+			<td  style="width:12.5%;" class='name' rowspan={{post.Exoplanets-Mass|size}}>{{ post.Star-name}}</td>
+			<td  style="width:12.5%;" class='mass' rowspan={{post.Exoplanets-Mass|size}}>{{ post.mass }}</td>
+			<td   style="width:12.5%;" class='teff' rowspan={{post.Exoplanets-Mass|size}}>{{ post.teff }}</td>
+			<td style="width:12.5%;" class='feh'  rowspan={{post.Exoplanets-Mass|size}}>{{ post.feh }}</td>
+			<td style="width:12.5%;"  class='data' rowspan={{post.Exoplanets-Mass|size}}><a target="_blank" rel="noopener noreferrer" href=" https://raw.githubusercontent.com/bmf-pinto/Online-Exoplanet-Catalogue/master/_data/WASP-11_3_NOT.csv"> data	</a></td>
+			<td style="width:12.5%;" class='planets' >{{ post.Exoplanets[0]}}<td/>	
+			<td style="width:8%;" class='pmass'  >{{ post.Exoplanets-Mass[0]}}<td/>
+			<td style="width:12.5%;"class='pperiod'>{{ post.Exoplanets-Period[0]}}<td/>
 			<td style="width:15%;"></td>
 		</tr>
 		{% assign num = post.Exoplanets-Mass|size|minus:1 %}
 		{% for i in (1..num) %}
 				<tr>
-					<td style="width:12.5%;" >{{ post.Exoplanets[i]}}<td/>	
-					<td style="width:8%;" >{{ post.Exoplanets-Mass[i]}}<td/>	
-					<td  style="width:12.5%;">{{ post.Exoplanets-Period[i]}}<td/>	
+					<td style="width:12.5%;"  class='planets' >{{ post.Exoplanets[i]}}<td/>	
+					<td style="width:8%;" class='pmass'  >{{ post.Exoplanets-Mass[i]}}<td/>	
+					<td  style="width:12.5%;"class='pperiod'>{{ post.Exoplanets-Period[i]}}<td/>	
 					<td style="width:15%;"></td>
 				</tr>
 			
@@ -60,7 +60,7 @@
 <script type="text/javascript">
 
 var options = {
-  valueNames: ['name', 'Mass', 'Teff', 'Metal' , 'RVData' , 'planets' , 'pmass' , 'period']
+  valueNames: ['name', 'mass', 'teff', 'feh' , 'data' , 'planets' , 'pmass' , 'pperiod']
 };
 
 var entryList = new List('entry-list', options);
