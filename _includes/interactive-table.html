@@ -1,12 +1,29 @@
+{% assign nplanets=0 %}
+{% assign nstars=0 %}
+{% for post in site.posts %}
+	{% assign nstars=nstars|plus:1 %}
+	{% assign n=post.Exoplanets-Mass|size %}
+	{% assign nplanets=nplanets|plus:n%}
+
+{% endfor %}
+	
+
+
 <div id="entry-list">
 
+
+<div class="row"> Total Number of Stars:{{nstars}}</div>
+<div class="row"> Total Number of Planets:{{nplanets}}</div>
+
+	
+	
 <div class="row" style="margin-bottom:10px;">
 		<input type="text" class="search form-control" placeholder="Search" />
 </div>
 
 <div class="row">
-<table class="table table-striped"  class="sortable">
-	<thead  class="sortable">
+<table class="table table-striped sortable">
+	<thead >
 		<tr>
 			<th style="width:14%;" class='name' >Star</th>
 			<th style="width:14%;" class='mass' >Mass</th>
@@ -24,24 +41,29 @@
 	{% for post in site.posts %}
 		
 		<tr>
-			<td  style="width:12.5%;" class='name' rowspan={{post.Exoplanets-Mass|size}}>{{ post.Star-name}}</td>
-			<td  style="width:12.5%;" class='mass' rowspan={{post.Exoplanets-Mass|size}}>{{ post.mass }}</td>
-			<td   style="width:12.5%;" class='teff' rowspan={{post.Exoplanets-Mass|size}}>{{ post.teff }}</td>
-			<td style="width:12.5%;" class='feh'  rowspan={{post.Exoplanets-Mass|size}}>{{ post.feh }}</td>
-			<td style="width:12.5%;"  class='data' rowspan={{post.Exoplanets-Mass|size}}><a target="_blank" rel="noopener noreferrer" href=" https://raw.githubusercontent.com/bmf-pinto/Online-Exoplanet-Catalogue/master/_data/WASP-11_3_NOT.csv"> data	</a></td>
+			<td style="width:12.5%;" class='name'>{{ post.Star-name}}</td>
+			<td style="width:12.5%;" class='mass'>{{ post.mass }}</td>
+			<td style="width:12.5%;" class='teff'>{{ post.teff }}</td>
+			<td style="width:12.5%;" class='feh'  >{{ post.feh }}</td>
+			<td style="width:12.5%;"  class='data' ><a target="_blank" rel="noopener noreferrer" href=" https://raw.githubusercontent.com/bmf-pinto/Online-Exoplanet-Catalogue/master/_data/WASP-11_3_NOT.csv"> data	</a></td>
 			<td style="width:12.5%;" class='planets' >{{ post.Exoplanets[0]}}<td/>	
 			<td style="width:8%;" class='pmass'  >{{ post.Exoplanets-Mass[0]}}<td/>
 			<td style="width:12.5%;"class='pperiod'>{{ post.Exoplanets-Period[0]}}<td/>
 			<td style="width:15%;"></td>
-		</tr>
+		
 		{% assign num = post.Exoplanets-Mass|size|minus:1 %}
 		{% for i in (1..num) %}
-				<tr>
+				<tr>	
+					<td  style="width:12.5%;" class='name' ></td>
+					<td  style="width:12.5%;" class='mass' ></td>
+					<td   style="width:12.5%;" class='teff' ></td>
+					<td style="width:12.5%;" class='feh' ></td>
+					<td style="width:12.5%;"  class='data' ></td>
 					<td style="width:12.5%;"  class='planets' >{{ post.Exoplanets[i]}}<td/>	
 					<td style="width:8%;" class='pmass'  >{{ post.Exoplanets-Mass[i]}}<td/>	
 					<td  style="width:12.5%;"class='pperiod'>{{ post.Exoplanets-Period[i]}}<td/>	
 					<td style="width:15%;"></td>
-				</tr>
+				
 			
 		{% endfor %}
 		

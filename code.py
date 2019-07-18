@@ -7,53 +7,49 @@ exoplanets=exo.get_data()
 
 for i in range(stars.size):
 	
-		
-	planets=0
-	index=np.array([])
+
+	
+	planets=np.array([])
 	for j in range(exoplanets.size):
 		if exoplanets['star_name'][j] == stars['name'][i]:
-			planets+=1
-			index=np.append(index,j)
+			planets=np.append(planets,j)
+			
 
 
 
-	if len(index) > 0:
+	if len(planets) > 0:
 
-		f=open(stars['name'][i]+".txt","w")
-		f.write('---\r\nlayout:entry\r\nStar-name:'+stars['name'][i]+'\r\n')
+		dict =	{
+			"Star-name": stars['name'][i],
+  			"teff": stars['teff'][i],
+  			"feh": stars['feh'][i],
+  			"mass": stars['mass'][i],
+  			"Exoplanets": [],
+  			"Exoplanets-Mass":[],
+  			"Exoplanets-Period": []
+		}
+
+
+
+		
+		date=[stars['last_update'][i]]
+
+		for planet in planets:
+			dict['Exoplanets'] += [exoplanets['name'][int(planet)]]
+			dict['Exoplanets-Mass'] += [exoplanets['mass_sini'][int(planet)]]
+			dict['Exoplanets-Period'] += [exoplanets['orbital_period'][int(planet)]]
+			date+= [exoplanets['updated'][int(planet)]]
+
+		date=max(date)
+
+		f=open(date+stars['name'][i]+".md","w")
+
+		f.write('---\r\nlayout: entry\r\n')
+		for k , v in dict.items():
+			f.write(str(k)+': '+str(v)+'\r\n')
+
+		f.write('---')
 		f.close()
-
-		f2=open(stars['name'][i]+".txt","a")
-
-		for k in ['teff','feh','mass']:
-			f2.write(k+':'+str(stars[k][i])+'\r\n')
-
-
-		f2.write('Exoplanets: [')
-		for planet in index:
-			f2.write(str(exoplanets['name'][int(planet)]))
-			if planet != index[-1]:
-				f2.write(',')
-			else: 
-				f2.write(']\r\n')
-
-		f2.write('Exoplanets-Mass: [')
-		for planet in index:
-			f2.write(str(exoplanets['mass'][int(planet)]))
-			if planet != index[-1]:
-				f2.write(',')
-			else: 
-				f2.write(']\r\n')
-		f2.write('Exoplanets-Period: [')
-		for planet in index:
-			f2.write(str(exoplanets['orbital_period'][int(planet)]))
-			if planet != index[-1]:
-				f2.write(',')
-			else: 
-				f2.write(']\r\n')	
-		
-		f2.write('Number-Exoplanets:'+str(planets)+'\r\n---')
-		f2.close()
 	
 
 	
@@ -62,10 +58,3 @@ for i in range(stars.size):
 		
 		
 	
-
-#for key in stars:
-	#print(key,stars[key][1])
-
-#print(exoplanets['name'][0],stars['name'][0])
-#if exoplanets['name'][0] == stars['name'][0]+' b':
-	#print('True')

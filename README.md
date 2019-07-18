@@ -1,4 +1,4 @@
 # Online-Exoplanet-Catalogue
 An Online Catalogue of Exoplanet Data.
 
-https://bia97.github.io/testes-catalogo/
+https://bmf-pinto.github.io/Online-Exoplanet-Catalogue/
