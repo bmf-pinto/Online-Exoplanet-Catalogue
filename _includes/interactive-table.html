@@ -1,12 +1,20 @@
 {% assign nplanets=0 %}
 {% assign nstars=0 %}
+
+<!-- determines the number of stars and exoplanets in the catalogue -->
+
 {% for post in site.posts %}
 	{% assign nstars=nstars|plus:1 %}
 	{% assign n=post.Exoplanets-Mass|size %}
 	{% assign nplanets=nplanets|plus:n%}
+	
 
 {% endfor %}
-	
+
+{%assign count=0 %}
+{%assign count3=0 %}
+
+
 
 
 <div id="entry-list">
@@ -17,11 +25,16 @@
 	
 	
 <div class="row" style="margin-bottom:10px;">
-		<input type="text" class="search form-control" placeholder="Search" />
+
+  <i id="search" class="fa fa-search" ></i>
+ 
+
+		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search" />
+	
 </div>
 
 <div class="row">
-<table class="table table-striped sortable">
+<table id="myTable" class="table table-striped sortable">
 	<thead >
 		<tr>
 			<th style="width:14%;" class='name' >Star <br></br></th>
@@ -36,47 +49,165 @@
 			<th style="width:15%;" class='pperiod'>Period [days]</th>
 		</tr>
 	</thead>
-	<tbody class="list">
+
+
+
+    <tbody class="list sortable">
+    
 	{% for post in site.posts %}
+		{% assign t=false %}
 		
-		<tr>
+		
+		{% assign num = post.Exoplanets-Mass|size|minus:1 %}
+
+		<!-- default values for the variable in case there is no data file -->
+		{% assign instrument=0 %}
+		{% assign rvd2 = 1 %}
+		{% assign rvd3 = 1 %}
+		{% assign rvd4 = 1 %}
+		{% assign instname=1 %}
+		{% assign instname2=1 %}
+		{% assign instname3=1 %}
+
+		{% for dados in site.data %}
+
+			
+			{% assign rvd = dados|split:" " | remove: "[" | remove: "]" | truncatewords: 1, ""  %}
+			{% assign rvd = rvd| remove: "\" | remove: "," | remove: '"' %}
+			
+			{% assign starfile = rvd| prepend:'"' | append:'"'| split:'_' | first | append:'"' %}
+
+			{% assign star=post.Star-name|prepend:'"' |append:'"'%}
+			
+			<!-- match star/post to data file -->
+			{% if starfile == star %}
+
+				{% assign instrument=instrument | plus:1 %}
+		
+				
+				{% assign t=true %}
+
+				{% if instrument == 1 %}
+
+					{% assign instname = rvd| prepend:'"' | append:'"'| split:'_' | last | remove:'"' | append:"'" | prepend: "'" %}
+
+					{% assign file=rvd| prepend: '"https://raw.githubusercontent.com/bmf-pinto/Online-Exoplanet-Catalogue/master/_data/' | append:'.yml"' %}
+	
+					{% assign rvd2 = site.data.[rvd] | split:" " | join:", " | prepend:"[" | append:"]" %}
+
+				{% endif %}
+
+				{% if instrument == 2 %}
+
+					{% assign instname2 = rvd| prepend:'"' | append:'"'| split:'_' | last | remove:'"' | append:"'" | prepend: "'" %}
+
+					{% assign file2=rvd| prepend: '"https://raw.githubusercontent.com/bmf-pinto/Online-Exoplanet-Catalogue/master/_data/' | append:'.yml"' %}
+	
+					{% assign rvd3 = site.data.[rvd] | split:" " | join:", " | prepend:"[" | append:"]" %}
+
+				{% endif %}
+
+				{% if instrument == 3 %}
+
+					{% assign instname3 = rvd| prepend:'"' | append:'"'| split:'_' | last | remove:'"' | append:"'" | prepend: "'" %}
+
+					{% assign file3=rvd| prepend: '"https://raw.githubusercontent.com/bmf-pinto/Online-Exoplanet-Catalogue/master/_data/' | append:'.yml"' %}
+	
+					{% assign rvd4 = site.data.[rvd] | split:" " | join:", " | prepend:"[" | append:"]" %}
+
+					{% break %}
+
+				{% endif %}
+			
+				
+
+			{% endif %}
+
+			
+				
+	
+		
+		
+
+		{% endfor %}
+
+		
+		<!-- variables to assign the cell id as a function of the star post -->
+		{% assign count=count|plus:1 %}
+		{% assign last = count|append:"last" %}
+		{% assign lastc = count|append:"lastc" %}
+		{% assign lastd = count|append:"lastd" %}
+
+		{% assign rvdata = count|append:"data" %}
+		
+	
+		
+		<tr> 
 			<td style="width:12.5%;" class='name'>{{ post.Star-name}}</td>
 			<td style="width:12.5%;" class='mass'>{{ post.mass }}</td>
 			<td style="width:12.5%;" class='teff'>{{ post.teff }}</td>
 			<td style="width:12.5%;" class='feh'  >{{ post.feh }}</td>
-			<td style="width:12.5%;"  class='data' ><a target="_blank" rel="noopener noreferrer" href=" https://raw.githubusercontent.com/bmf-pinto/Online-Exoplanet-Catalogue/master/_data/WASP-11_3_NOT.csv"> data	</a></td>
-			<td style="width:12.5%;" class='planets' >{{ post.Exoplanets[0]}}<td/>	
+		{% if t==true %}
+			<td style="width:12.5%; font-size: 10px;  " class='data' id="{{rvdata}}" ><button onclick="change({{count}},1,{{rvd2}},{{instname}},{{rvd3}},{{instname2}},{{rvd4}},{{instname3}},{{instrument}})">see data</button></td>
+		{% else %}
+			<td style="width:12.5%; font-size: 10px; " class='data' id="{{rvdata}}" >not available</td>
+		{% endif %}
+			<td style="width:12.5%; " class='planets' >{{ post.Exoplanets[0]}}<td/>	
 			<td style="width:8%;" class='pmass'  >{{ post.Exoplanets-Mass[0]}}<td/>
 			<td style="width:12.5%;"class='pperiod'>{{ post.Exoplanets-Period[0]}}<td/>
 			<td style="width:15%;"></td>
 		
-		{% assign num = post.Exoplanets-Mass|size|minus:1 %}
+		
+		
 		{% for i in (1..num) %}
-				<tr>	
-					<td  style="width:12.5%;" class='name' ></td>
-					<td  style="width:12.5%;" class='mass' ></td>
-					<td   style="width:12.5%;" class='teff' ></td>
-					<td style="width:12.5%;" class='feh' ></td>
-					<td style="width:12.5%;"  class='data' ></td>
-					<td style="width:12.5%;"  class='planets' >{{ post.Exoplanets[i]}}<td/>	
-					<td style="width:8%;" class='pmass'  >{{ post.Exoplanets-Mass[i]}}<td/>	
-					<td  style="width:12.5%;"class='pperiod'>{{ post.Exoplanets-Period[i]}}<td/>	
-					<td style="width:15%;"></td>
+
+		
+
+		
+
+
+
+				<tr  >	
+					<td width=12.5%  style="font-size: 0px; " class='name' >{{ post.Star-name}}a </td>
+					<td width=12.5% class='mass' ></td>
+					<td width=12.5% class='teff' ></td>
+					<td width=12.5% class='data' ></td>
+					<td width=12.5%  class='feh' >
+						
+					</td>
+					
+					<td width=12.5%  class='planets' >{{ post.Exoplanets[i]}}<td/>	
+					<td width=12.5% class='pmass'  >{{ post.Exoplanets-Mass[i]}}<td/>	
+					<td  width=12.5% class='pperiod'>{{ post.Exoplanets-Period[i]}}<td/>	
+					<td width=12.5%></td>
+
 				
 			
 		{% endfor %}
-		
+
+		{% if t==true %}
+	
+			<tr  >	
+				<td style="font-size: 0px; "  width=1%>{{ post.Star-name}}a</td>
+					<th colspan="9" height="0px" id="{{last}}"  class='name' > </th>
+					<td  width=8%><a href={{file}} target="_blank"><button id="{{lastd}}"  style="display: none;" ><i class="fa fa-download"></i> </button></a></td>
+					<td  width=5%><button id="{{lastc}}" style="display: none;"  onclick="change({{count}},0,{{rvd2}},{{instname}},{{rvd3}},{{instname2}},{{rvd4}},{{instname3}},{{instrument}})">x</button></td>
+
+				
+		{% endif %}
+	
 				
 			
-		
-		
-	{% endfor %}
+	{% endfor %}	
+
 	</tbody>
-</table>
+
+	
+	
+</table> 
 </div>
 
 </div>
-
 
 <script type="text/javascript">
 
@@ -88,3 +219,285 @@ var options = {
 var entryList = new List('entry-list', options);
 
 </script>
+
+
+<script type="text/javascript" >
+	function change(x,y,data,name,data2,name2,data3,name3,num) {
+				
+				/* identifies id and changes cell element to render the chart  */
+				
+				var n = x.toString(); 
+				var l = "last"; var lc = "lastc"; var ld = "lastd";
+				var join = n.concat(l); var joinc = n.concat(lc); var joind = n.concat(ld);
+				var cell=document.getElementById(join);
+
+				cell.height=350; 
+
+
+				/* 1st data series  */
+			
+				var seq=range(0,data.length-1,3); var rawd=data; var number; var points = [];
+
+
+				;
+
+				var dataSeries = { type: "scatter" ,
+					showInLegend: true,
+
+					name: name,
+					
+					markerType: "circle"};
+
+				var dataPoints = []; var errorPoints = [];
+				
+				var error = {type: "error",
+					color: "blue",
+					name:"error range"};
+		
+				var minimo=rawd[0]-(rawd[3]-rawd[0]); var maximo=rawd[rawd.length-3]+2*(rawd[3]-rawd[0]);
+			
+				for (number of seq){
+				
+					dataPoints.push({
+					x: rawd[number],
+					y: rawd[number+1]                
+					});
+				
+				
+					var mini=rawd[number+1]-rawd[number+2]/2; var maxi=rawd[number+1]+rawd[number+2]/2; 
+					errorPoints.push({
+					x: rawd[number],
+					y: [mini,maxi]});
+				
+					
+					}
+
+				dataSeries.dataPoints = dataPoints;
+				error.dataPoints=errorPoints;
+
+				points.push(dataSeries); points.push(error);
+
+
+
+
+				if ( num > 1){
+
+					/* 2nd data series if there is one */
+
+					var seq2=range(0,data2.length-1,3); var rawd2=data2; var number2; var points2 = [];
+
+					var dataSeries2 = { type: "scatter" ,
+					showInLegend: true,
+					name: name2,
+					
+					markerType: "circle"};
+
+					var dataPoints2 = []; var errorPoints2 = [];
+
+					var error2 = {type: "error",
+					color:"green",
+					name:"error range"};
+
+					var minimo2=rawd2[0]-2*(rawd2[6]-rawd2[0]); var maximo2=rawd2[rawd2.length-3]+2*(rawd2[6]-rawd2[0]);
+
+					maximo=Math.max(maximo,maximo2); minimo=Math.max(minimo,minimo2);
+
+					for (number2 of seq2){
+				
+						dataPoints2.push({
+							x: rawd2[number2],
+							y: rawd2[number2+1]                
+						});
+					
+					
+						var mini2=rawd2[number2+1]-rawd2[number2+2]/2; var maxi2=rawd2[number2+1]+rawd2[number2+2]/2; 
+						
+						errorPoints2.push({
+							x: rawd2[number2],
+							y: [mini2,maxi2]});
+						
+					}
+
+					dataSeries2.dataPoints = dataPoints2;
+					error2.dataPoints=errorPoints2;
+					points.push(dataSeries2); points.push(error2);
+
+					if ( num > 2){
+
+						/* 3rd data series if there is one */
+
+
+						var seq3=range(0,data3.length-1,3); var rawd3=data3; var number3; var points3 = [];
+
+						var dataSeries3 = { type: "scatter" ,
+						showInLegend: true,
+						color: "darkred",
+						name: name3,
+						
+						markerType: "circle"};
+
+						var dataPoints3 = []; var errorPoints3 = [];
+
+						var error3 = {type: "error",
+						color: "red",
+						name:"error range"};
+
+						var minimo3=rawd3[0]-2*(rawd3[6]-rawd3[0]); var maximo3=rawd3[rawd3.length-3]+2*(rawd3[6]-rawd3[0]);
+
+						maximo=Math.max(maximo,maximo2,maximo3); minimo=Math.max(minimo,minimo2,minimo3);
+
+						for (number3 of seq3){
+					
+							dataPoints3.push({
+								x: rawd3[number3],
+								y: rawd3[number3+1]                
+							});
+						
+						
+							var mini3=rawd3[number3+1]-rawd3[number3+2]/2; var maxi3=rawd3[number3+1]+rawd3[number3+2]/2; 
+							
+							errorPoints3.push({
+								x: rawd3[number3],
+								y: [mini3,maxi3]});
+							
+						}
+
+						dataSeries3.dataPoints = dataPoints3;
+						error3.dataPoints=errorPoints3;
+						points.push(dataSeries3); points.push(error3);
+					}
+
+				}
+
+
+				/* makes download and close buttons visible */
+
+				var botao=document.getElementById(joinc); var down=document.getElementById(joind);
+			
+				botao.style.display="block"; down.style.display="block";
+
+	
+				/* chart configuration */
+
+				var chart = new CanvasJS.Chart(cell, {
+					//in pixels
+				    height:320,//in pixels
+				    position:"relative",
+				    float:"right",
+					animationEnabled: false,
+					zoomEnabled: true,
+					zoomType: "xy",
+				
+					axisX: {
+						title: "time (days)",
+						includeZero: false,
+						minimum: minimo ,
+						maximum: maximo,
+					},
+					axisY:{
+						title: "Radial Velocity (Km/s)",
+						gridThickness: 0,
+						includeZero: false
+					},
+					
+					data: points
+				});
+				chart.render();
+
+					/* for the close button only */
+					if (y==0){
+						chart.destroy();
+						cell.height=0;
+						botao.style.display="none";
+						down.style.display="none";
+					}
+	}
+
+
+		
+
+	
+</script>
+
+
+
+
+
+<script type="">
+	function range(start, end, step = 1) {
+  
+  // Test that the first 3 arguments are finite numbers.
+  // Using Array.prototype.every() and Number.isFinite().
+  const allNumbers = [start, end, step].every(Number.isFinite);
+
+  // Throw an error if any of the first 3 arguments is not a finite number.
+  if (!allNumbers) {
+    throw new TypeError('range() expects only finite numbers as arguments.');
+  }
+  
+  // Ensure the step is always a positive number.
+  if (step <= 0) {
+    throw new Error('step must be a number greater than 0.');
+  }
+  
+  // When the start number is greater than the end number,
+  // modify the step for decrementing instead of incrementing.
+  if (start > end) {
+    step = -step;
+  }
+  
+  // Determine the length of the array to be returned.
+  // The length is incremented by 1 after Math.floor().
+  // This ensures that the end number is listed if it falls within the range.
+  const length = Math.floor(Math.abs((end - start) / step)) + 1;
+  
+  // Fill up a new array with the range numbers
+  // using Array.from() with a mapping function.
+  // Finally, return the new array.
+  return Array.from(Array(length), (x, index) => start + index * step);
+  
+   }
+
+
+</script>
+
+<script>
+function myFunction() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
+
+<style type="text/css">
+	#myInput {
+ float: right;
+  width: 98%; 
+  font-size: 16px; 
+  padding: 4px 2px 4px 4px;
+  border: 1px solid #ddd; 
+  margin-bottom: 12px; 
+}
+#search {
+ float: left;
+ font-size: 16px;
+  width: 2%; 
+   margin-top:  6px;
+}
+</style>
